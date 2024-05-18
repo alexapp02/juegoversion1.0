@@ -20,6 +20,8 @@ struct Jugador {
     vector<vector<string>> pistas; // Vector de pistas para cada pregunta
 };
 
+void jugarNivel2(const string& archivo, Jugador& jugador);
+
 Datos LeerDatos() {
     Datos ingresarDato;
 
@@ -45,7 +47,7 @@ void reglasdejuego3() {
 
 void reglasdejuegoNivel2() {
     cout << "-----------------Bienvenido al juego Adivinar la palabra Nivel 2-------------------" << endl;
-    cout << "En este nivel, te daremos definiciones de palabras y tendras que adivinar la palabra correcta." << endl;
+    cout << "En este nivel, te daremos cuatro opciones con definiciones de personajes y tendras que adivinar cual es la opcion correcta." << endl;
     cout << "Cada respuesta correcta suma 10 puntos, y por cada incorrecta se restan 5 puntos." << endl;
     cout << "Tendras 10 oportunidades por turno." << endl;
     cout << "Ademas, dispones de comodines que puedes usar para obtener la respuesta correcta automaticamente." << endl;
@@ -118,42 +120,7 @@ void juego3Adivinarpalabra(Jugador& jugador) {
 
 void juego3AdivinarpalabraNivel2(Jugador& jugador) {
     reglasdejuegoNivel2();
-
-    vector<pair<string, string>> preguntas = AbrirArchivoPreguntas("nivel2.txt");
-
-    int puntaje = 0;
-    int intentos = 0;
-    int comodines = 2; // Sistema de comodines
-    for (const auto& pregunta : preguntas) {
-        cout << pregunta.second << endl;
-
-        cout << "Ingresa definicion correcta (o usa un comodin): ";
-        string respuesta;
-        getline(cin, respuesta);
-
-        // Convertir respuesta a minúsculas
-        transform(respuesta.begin(), respuesta.end(), respuesta.begin(), ::tolower);
-
-        // Si la respuesta es un comodín, usarlo
-        if (respuesta == "comodin" && comodines > 0) {
-            cout << "Has usado un comodin! La respuesta correcta es: " << pregunta.first << endl;
-            respuesta = pregunta.first; // Asignar la respuesta correcta automáticamente
-            comodines -= 1; // Reducir el número de comodines disponibles
-        }
-
-        if (pregunta.first == respuesta) {
-            cout << "La palabra es correcta! Sumas 10 puntos." << endl << endl;
-            puntaje += 10;
-        } else {
-            cout << "La palabra es incorrecta." << endl;
-            cout << "La palabra correcta es: " << pregunta.first << endl << endl;
-            puntaje -= 5;
-        }
-        intentos++;
-    }
-    cout << "Tu puntaje fue: " << puntaje << endl;
-
-    jugador.puntaje = puntaje;
+    jugarNivel2("nivel2.txt", jugador); 
 }
 
 void AlmacenarPuntajeNivel1(const Jugador& jugador) {
@@ -317,6 +284,54 @@ void InicializarArchivos() {
     CrearArchivoSiNoExiste("NombresypuntajesNivel2.txt", "");
     CrearArchivoSiNoExiste("Nombresypuntajes_Ordenados.txt", "");
     CrearArchivoSiNoExiste("Nombresypuntajes_OrdenadosNivel2.txt", "");
+}
+
+void jugarNivel2(const string& archivo, Jugador& jugador) {
+    ifstream file(archivo);
+    if (!file.is_open()) {
+        cerr << "Error al abrir el archivo." << endl;
+        return;
+    }
+
+    string linea;
+    int puntaje = 0;
+    while (getline(file, linea)) {
+        string pregunta = linea;
+        string opciones[4];
+        for (int i = 0; i < 4; ++i) {
+            getline(file, opciones[i]);
+        }
+        string respuestaCorrecta;
+        getline(file, respuestaCorrecta);
+
+        cout << pregunta << endl;
+        for (int i = 0; i < 4; ++i) {
+            cout << char('A' + i) << ") " << opciones[i] << endl;
+        }
+
+        cout << "\nIngresa tu respuesta (A, B, C, D): ";
+        char respuestaUsuario;
+        cin >> respuestaUsuario;
+        respuestaUsuario = toupper(respuestaUsuario);
+
+        int indiceRespuestaUsuario = respuestaUsuario - 'A';
+        if (indiceRespuestaUsuario >= 0 && indiceRespuestaUsuario < 4) {
+            if (opciones[indiceRespuestaUsuario] == respuestaCorrecta) {
+                cout << "\nRespuesta correcta!. Sumas 10 puntos.\n" << endl;
+                puntaje += 10;
+            } else {
+                cout << "\nRespuesta incorrecta. La respuesta correcta es: " << endl << respuestaCorrecta << endl << "Restas 5 puntos.\n" << endl;
+                puntaje -= 5;
+            }
+        } else {
+            cout << "Opcion no valida. Restas 5 puntos." << endl;
+            puntaje -= 5;
+        }
+    }
+
+    cout << "\nTu puntaje fue: " << puntaje << endl;
+    jugador.puntaje = puntaje;
+    file.close();
 }
 
 int main() {
