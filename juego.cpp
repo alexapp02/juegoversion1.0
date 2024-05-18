@@ -32,6 +32,7 @@ Datos LeerDatos() {
 
     return ingresarDato;
 }
+
 void reglasdejuego3() {
     cout << "-----------------Bienvenido al juego Adivinar la palabra-------------------" << endl;
     cout << "En este juego te vamos a dar la descripcion de los personajes y tu tienes que adivinar el personaje correcto" << endl << endl;
@@ -240,6 +241,15 @@ void OrdenarPuntajesMayorAMenor() {
         return;
     }
 
+    string linea;
+    while (getline(archivoPuntajes, linea)) {
+        size_t inicio = linea.find(": ") + 2; // Buscar el inicio del puntaje
+        size_t fin = linea.find(")", inicio); // Buscar el fin del puntaje
+        if (inicio != string::npos && fin != string::npos) { // Verificar que se encontraron los delimitadores
+            string puntaje_str = linea.substr(inicio, fin - inicio);
+            int puntaje = stoi(puntaje_str);
+            puntajes.push_back({ linea, puntaje });
+        }
     }
     archivoPuntajes.close();
 
