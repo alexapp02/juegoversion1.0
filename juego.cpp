@@ -239,3 +239,100 @@ void OrdenarPuntajesMayorAMenor() {
         cout << "Error al abrir el archivo de puntajes." << endl;
         return;
     }
+
+    }
+    archivoPuntajes.close();
+
+    RadixSort(puntajes);
+
+    ofstream archivoOrdenado("Nombresypuntajes_Ordenados.txt");
+    if (!archivoOrdenado.is_open()) {
+        cout << "Error al abrir el archivo para escribir los puntajes ordenados." << endl;
+        return;
+    }
+    for (auto it = puntajes.rbegin(); it != puntajes.rend(); ++it) {
+        archivoOrdenado << it->first << endl;
+    }
+    archivoOrdenado.close();
+
+    cout << "Puntajes ordenados y almacenados en el archivo 'Nombresypuntajes_Ordenados.txt'." << endl;
+}
+
+void OrdenarPuntajesMayorAMenorNivel2() {
+    vector<pair<string, int>> puntajes;
+
+    ifstream archivoPuntajes("NombresypuntajesNivel2.txt");
+    if (!archivoPuntajes.is_open()) {
+        cout << "Error al abrir el archivo de puntajes." << endl;
+        return;
+    }
+
+    string linea;
+    while (getline(archivoPuntajes, linea)) {
+        size_t inicio = linea.find(": ") + 2; // Buscar el inicio del puntaje
+        size_t fin = linea.find(")", inicio); // Buscar el fin del puntaje
+        if (inicio != string::npos && fin != string::npos) { // Verificar que se encontraron los delimitadores
+            string puntaje_str = linea.substr(inicio, fin - inicio);
+            int puntaje = stoi(puntaje_str);
+            puntajes.push_back({ linea, puntaje });
+        }
+    }
+    archivoPuntajes.close();
+
+    RadixSort(puntajes);
+
+    ofstream archivoOrdenado("Nombresypuntajes_OrdenadosNivel2.txt");
+    if (!archivoOrdenado.is_open()) {
+        cout << "Error al abrir el archivo para escribir los puntajes ordenados." << endl;
+        return;
+    }
+    for (auto it = puntajes.rbegin(); it != puntajes.rend(); ++it) {
+        archivoOrdenado << it->first << endl;
+    }
+    archivoOrdenado.close();
+
+    cout << "Puntajes ordenados y almacenados en el archivo 'Nombresypuntajes_OrdenadosNivel2.txt'." << endl;
+}
+
+void CrearArchivoSiNoExiste(const string& nombreArchivo, const string& contenido) {
+    if (!fs::exists(nombreArchivo)) {
+        ofstream archivo(nombreArchivo);
+        archivo << contenido;
+        archivo.close();
+    }
+}
+
+void InicializarArchivos() {
+    CrearArchivoSiNoExiste("Nombresypuntajes.txt", "");
+    CrearArchivoSiNoExiste("NombresypuntajesNivel2.txt", "");
+    CrearArchivoSiNoExiste("Nombresypuntajes_Ordenados.txt", "");
+    CrearArchivoSiNoExiste("Nombresypuntajes_OrdenadosNivel2.txt", "");
+    CrearArchivoSiNoExiste("palabras.txt", "¿Quien es el principe y guerrero de Asgard?:thor\n¿Quien es el Dios de las Mentiras y un experto ilusionista?:loki\n¿Quien es genio, multimillonario, playboy y filantropo?:ironman\n¿Quien es capaz de treparse y adherirse a las paredes?:spiderman\n¿Quien es la maquina de rabia verde?:hulk\n¿Cual es el único objetivo de Thanos?:obtener las seis Gemas del Infinito\n¿Quien tiene la capacidad de reducirse a tamano subatomico?:antman\n¿Quien es la magia del caos y tiene el control mental?:bruja escarlata\n¿Quien nacio como un nuevo cuerpo para Ultron?:vision\n¿Quien es el símbolo de libertad y un supersoldado?:capitan america\n");
+    CrearArchivoSiNoExiste("nivel2.txt", "Principe y guerrero de Asgard, dios del trueno, protector de la tierra, y de los 9 reinos:thor\nEl Dios de las Mentiras y un experto ilusionista, puede cambiar su aspecto fisico a voluntad:loki\nGenio, multimillonario, playboy y filantropo. Con metralla en su pecho, existe la prueba de que si tiene corazon:ironman\nCapaz de treparse y adherirse a las paredes y un sentido subconsciente de premonicion de peligro. 'Un gran poder conlleva una gran responsabilidad:spiderman\nSalvage y furioso, la mÃ¡quina de rabia verde:hulk\nSu unico objetivo es obtener las seis Gemas del Infinito:obtener las seis Gemas del Infinito\nTiene la capacidad de reducirse a tamano subatomico:antman\nEs la magia del caos y tiene el control mental:bruja escarlata\nNacio como un nuevo cuerpo para Ultron, con sentidos sobre humanos gracias a la gema de la mente:vision\nSimbolo de libertad, un supersoldado que lucha contra las potencias enemigas de la Segunda Guerra Mundial:capitan america\n");
+}
+
+int main() {
+    InicializarArchivos(); // Inicializa los archivos necesarios
+
+    int opcion;
+    cout << "Seleccione el nivel 1 o 2:  ";
+    cin >> opcion;
+    cin.ignore();
+
+    switch (opcion) {
+    case 1:
+        JugarJuegoAdivinarPalabraNivel1();
+        OrdenarPuntajesMayorAMenor();
+        break;
+    case 2:
+        JugarJuegoAdivinarPalabraNivel2();
+        OrdenarPuntajesMayorAMenorNivel2();
+        break;
+
+    default:
+        cout << "opcion no valida";
+        break;
+    }
+    
+    return 0;
+}
