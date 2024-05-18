@@ -1,10 +1,10 @@
-¿Quien es el principe y guerrero de Asgard?:thor
-¿Quien es el Dios de las Mentiras y un experto ilusionista?:loki
-¿Quien es genio, multimillonario, playboy y filantropo?:ironman
-¿Quien es capaz de treparse y adherirse a las paredes?:spiderman
-¿Quien es la maquina de rabia verde?:hulk
-¿Cual es el único objetivo de Thanos?:obtener las seis Gemas del Infinito
-¿Quien tiene la capacidad de reducirse a tamano subatomico?:antman
-¿Quien es la magia del caos y tiene el control mental?:bruja escarlata
-¿Quien nacio como un nuevo cuerpo para Ultron?:vision
-¿Quien es el símbolo de libertad y un supersoldado?:capitan america
+Quien es el principe y guerrero de Asgard?:thor
+Quien es el Dios de las Mentiras y un experto ilusionista?:loki
+Quien es genio, multimillonario, playboy y filantropo?:ironman
+Quien es capaz de treparse y adherirse a las paredes?:spiderman
+Quien es la maquina de rabia verde?:hulk
+Quien tiene como unico objetivo obtener las seis gemas del infinito?:thanos
+Quien tiene la capacidad de reducirse a tamano subatomico?:antman
+Quien es la magia del caos y tiene el control mental?:bruja escarlata
+Quien nacio como un nuevo cuerpo para Ultron?:vision
+Quien es el simbolo de libertad y un supersoldado?:capitan america
