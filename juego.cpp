@@ -295,6 +295,8 @@ void jugarNivel2(const string& archivo, Jugador& jugador) {
 
     string linea;
     int puntaje = 0;
+    int comodines = 2;
+
     while (getline(file, linea)) {
         string pregunta = linea;
         string opciones[4];
@@ -309,10 +311,19 @@ void jugarNivel2(const string& archivo, Jugador& jugador) {
             cout << char('A' + i) << ") " << opciones[i] << endl;
         }
 
-        cout << "\nIngresa tu respuesta (A, B, C, D): ";
+        cout << "\nIngresa tu respuesta (A, B, C, D) o usa un comodin ingresando el carater 'M': ";
         char respuestaUsuario;
         cin >> respuestaUsuario;
         respuestaUsuario = toupper(respuestaUsuario);
+
+        if (respuestaUsuario == 'M' && comodines > 0) {
+            cout << "Has usado un comodin! La respuesta correcta es: " << respuestaCorrecta << endl << "Sumas 10 puntos.\n" << endl;
+            respuestaCorrecta = respuestaUsuario; // Asignar la respuesta correcta automaticamente
+            comodines -= 1; // Reducir el número de comodines disponibles
+            puntaje += 10;
+            cin.ignore();
+            continue;
+        }
 
         int indiceRespuestaUsuario = respuestaUsuario - 'A';
         if (indiceRespuestaUsuario >= 0 && indiceRespuestaUsuario < 4) {
@@ -324,7 +335,7 @@ void jugarNivel2(const string& archivo, Jugador& jugador) {
                 puntaje -= 5;
             }
         } else {
-            cout << "Opcion no valida. Restas 5 puntos." << endl;
+            cout << "Opcion no valida. Restas 5 puntos." << endl << "La respuesta correcta es: " << respuestaCorrecta << endl << endl;
             puntaje -= 5;
         }
     }
