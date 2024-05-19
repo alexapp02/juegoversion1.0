@@ -149,20 +149,23 @@ void AlmacenarPuntajeNivel2(const Jugador& jugador) {
         cout << "Error al abrir el archivo para almacenar el puntaje." << endl;
     }
 }
+void ImprimirPrimeros5Puntajes(const string& archivo) {
+    ifstream archivoPuntajes(archivo);
+    if (!archivoPuntajes.is_open()) {
+        cout << "Error al abrir el archivo de puntajes ordenados." << endl;
+        return;
+    }
 
-void JugarJuegoAdivinarPalabraNivel1() {
-    Jugador jugador;
-    jugador.datos = LeerDatos();
-    juego3Adivinarpalabra(jugador);
-    AlmacenarPuntajeNivel1(jugador);
+    string linea;
+    int contador = 0;
+    while (getline(archivoPuntajes, linea) && contador < 5) {
+        cout << linea << endl;
+        contador++;
+    }
+    archivoPuntajes.close();
 }
 
-void JugarJuegoAdivinarPalabraNivel2() {
-    Jugador jugador;
-    jugador.datos = LeerDatos();
-    juego3AdivinarpalabraNivel2(jugador);
-    AlmacenarPuntajeNivel2(jugador);
-}
+
 
 void RadixSort(vector<pair<string, int>>& puntajes) {
     auto getMax = [](const vector<pair<string, int>>& vec) {
@@ -355,6 +358,27 @@ void jugarNivel2(const string& archivo, Jugador& jugador) {
     jugador.puntaje = puntaje;
     file.close();
 }
+
+
+void JugarJuegoAdivinarPalabraNivel1() {
+    Jugador jugador;
+    jugador.datos = LeerDatos();
+    juego3Adivinarpalabra(jugador);
+    AlmacenarPuntajeNivel1(jugador);
+    OrdenarPuntajesMayorAMenor();
+    ImprimirPrimeros5Puntajes("Nombresypuntajes_Ordenados.txt");
+}
+
+void JugarJuegoAdivinarPalabraNivel2() {
+    Jugador jugador;
+    jugador.datos = LeerDatos();
+    juego3AdivinarpalabraNivel2(jugador);
+    AlmacenarPuntajeNivel2(jugador);
+    OrdenarPuntajesMayorAMenorNivel2();
+    ImprimirPrimeros5Puntajes("Nombresypuntajes_OrdenadosNivel2.txt");
+}
+
+
 
 int main() {
     InicializarArchivos(); // Inicializa los archivos necesarios
