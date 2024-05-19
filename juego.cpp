@@ -318,13 +318,16 @@ void jugarNivel2(const string& archivo, Jugador& jugador) {
             cout << char('A' + i) << ") " << opciones[i] << endl;
         }
 
-        cout << "\nIngresa tu respuesta (A, B, C, D) o usa un comodin ingresando el carater 'M': ";
+        cout << "\nIngresa tu respuesta (A, B, C, D) o usa un comodin ingresando el carater 'M': "<<endl;
+        cout <<"Si deseas terminar el juego digita(S): "<<endl;
         char respuestaUsuario;
         cin >> respuestaUsuario;
         respuestaUsuario = toupper(respuestaUsuario);
-        
 
-        if (respuestaUsuario == 'M' && comodines > 0) {
+        if(respuestaUsuario == 'S'){
+            cout << "Has salido del juego." << endl;
+            break;
+        }else if (respuestaUsuario == 'M' && comodines > 0) {
             cout << "Has usado un comodin! La respuesta correcta es: " << respuestaCorrecta << endl << "Sumas 10 puntos.\n" << endl;
             respuestaCorrecta = respuestaUsuario; // Asignar la respuesta correcta automaticamente
             comodines -= 1; // Reducir el número de comodines disponibles
