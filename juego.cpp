@@ -4,10 +4,8 @@
 #include <vector>
 #include <algorithm>
 #include <cctype>
-#include <filesystem>
 
 using namespace std;
-namespace fs = std::filesystem;
 
 struct Datos {
     string nombre;
@@ -272,10 +270,11 @@ void OrdenarPuntajesMayorAMenorNivel2() {
 }
 
 void CrearArchivoSiNoExiste(const string& nombreArchivo, const string& contenido) {
-    if (!fs::exists(nombreArchivo)) {
-        ofstream archivo(nombreArchivo);
-        archivo << contenido;
-        archivo.close();
+    ifstream archivo(nombreArchivo);
+    if (!archivo.is_open()) {
+        ofstream nuevoArchivo(nombreArchivo);
+        nuevoArchivo << contenido;
+        nuevoArchivo.close();
     }
 }
 
