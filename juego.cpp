@@ -87,9 +87,16 @@ void juego3Adivinarpalabra(Jugador& jugador) {
     for (const auto& pregunta : preguntas) {
         cout << pregunta.first << endl;
 
-        cout << "Ingresa la palabra correcta (o usa un comodin): ";
+        cout << "Ingresa la palabra correcta (o usa un comodin): "<<endl;
+        cout <<"Si deseas terminar el juego digita(salir): "<<endl;
+
         string respuesta;
         getline(cin, respuesta);
+
+        if (respuesta == "salir") {
+            cout << "Has decidido salir del juego." << endl;
+            break;
+        }
 
         // Convertir respuesta a minúsculas
         transform(respuesta.begin(), respuesta.end(), respuesta.begin(), ::tolower);
@@ -296,6 +303,7 @@ void jugarNivel2(const string& archivo, Jugador& jugador) {
     int puntaje = 0;
     int comodines = 2;
 
+    
     while (getline(file, linea)) {
         string pregunta = linea;
         string opciones[4];
@@ -314,6 +322,7 @@ void jugarNivel2(const string& archivo, Jugador& jugador) {
         char respuestaUsuario;
         cin >> respuestaUsuario;
         respuestaUsuario = toupper(respuestaUsuario);
+        
 
         if (respuestaUsuario == 'M' && comodines > 0) {
             cout << "Has usado un comodin! La respuesta correcta es: " << respuestaCorrecta << endl << "Sumas 10 puntos.\n" << endl;
