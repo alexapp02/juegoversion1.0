@@ -360,24 +360,34 @@ int main() {
     InicializarArchivos(); // Inicializa los archivos necesarios
 
     int opcion;
-    cout << "Seleccione el nivel 1 o 2:  ";
-    cin >> opcion;
-    cin.ignore();
 
-    switch (opcion) {
-    case 1:
-        JugarJuegoAdivinarPalabraNivel1();
-        OrdenarPuntajesMayorAMenor();
-        break;
-    case 2:
-        JugarJuegoAdivinarPalabraNivel2();
-        OrdenarPuntajesMayorAMenorNivel2();
-        break;
+    do {
+        cout << "\n--- Menu ---" << endl;
+        cout << "1. Jugar nivel 1" << endl;
+        cout << "2. Jugar nivel 2" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+        cin.ignore();
 
-    default:
-        cout << "opcion no valida";
-        break;
-    }
+        switch (opcion) {
+            case 1:
+                JugarJuegoAdivinarPalabraNivel1();
+                OrdenarPuntajesMayorAMenor();
+                break;
+            case 2:
+                JugarJuegoAdivinarPalabraNivel2();
+                OrdenarPuntajesMayorAMenorNivel2();
+                break;
+
+            case 0:
+                cout << "¡Hasta luego!" << endl;
+                break;
+            default:
+                cout << "Opción no válida. Inténtalo de nuevo." << endl;
+                break;
+        }
+    } while(opcion !=0);
     
     return 0;
 }
