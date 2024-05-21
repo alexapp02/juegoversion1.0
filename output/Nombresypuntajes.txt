@@ -1,0 +1,5 @@
+Puntaje de Tato (ID: 2210): 40
+Puntaje de Angel (ID: 3026): 60
+Puntaje de Pedro (ID: 1420): 20
+Puntaje de jose (ID: 5060): 30
+Puntaje de Maria (ID: 4056): 10
